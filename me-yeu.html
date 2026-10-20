@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kính Tặng Mẹ Yêu Ngày 20/10 🌺</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff6eb 0%, #fdebd0 50%, #fadbd8 100%);
+            color: #4a3525;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+        }
+
+        #fireworks-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9990;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 22px;
+            z-index: 10;
+        }
+
+        .page-title span {
+            display: inline-block;
+            background: #fffdf9;
+            color: #ba4a00;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 2px solid #f5cba7;
+            margin-bottom: 8px;
+        }
+
+        .page-title h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.7rem;
+            color: #a04000;
+        }
+
+        /* --- CHIẾC THIỆP 3D MỞ CÁNH --- */
+        .card-scene {
+            width: 100%;
+            max-width: 620px;
+            perspective: 1600px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .greeting-card {
+            width: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        /* Bìa trước của chiếc thiệp */
+        .card-front {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #fffdf9 0%, #fef5e7 100%);
+            border: 4px solid #e59866;
+            border-radius: 28px;
+            box-shadow: 0 18px 40px rgba(160, 64, 0, 0.18);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 25px;
+            text-align: center;
+            cursor: pointer;
+            transform-origin: left center;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.9s ease 0.3s;
+            z-index: 5;
+            backface-visibility: hidden;
+        }
+
+        .greeting-card.opened .card-front {
+            transform: rotateY(-150deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cover-icon-circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fdebd0 0%, #fadbd8 100%);
+            border: 3px dashed #ca6f1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(202, 111, 30, 0.15);
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        .card-front h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.6rem;
+            color: #ba4a00;
+            margin-bottom: 12px;
+        }
+
+        .card-front p {
+            color: #6e4b32;
+            font-size: 1.05rem;
+            max-width: 380px;
+            margin-bottom: 24px;
+        }
+
+        .open-card-btn {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 6px 18px rgba(211, 84, 0, 0.3);
+        }
+
+        /* Phần ruột bên trong chiếc thiệp */
+        .card-inside {
+            background: #fffdf9;
+            border: 4px solid #f5cba7;
+            border-radius: 28px;
+            padding: 38px 30px;
+            box-shadow: 0 18px 45px rgba(160, 64, 0, 0.12);
+            opacity: 0.25;
+            transform: scale(0.96);
+            transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+        }
+
+        .greeting-card.opened .card-inside {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .inside-illustration {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .family-badge {
+            width: 95px;
+            height: 95px;
+            background: #fef5e7;
+            border: 3px solid #e59866;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            box-shadow: 0 6px 15px rgba(202, 111, 30, 0.12);
+        }
+
+        .inside-header {
+            text-align: center;
+            border-bottom: 2px dashed #f5cba7;
+            padding-bottom: 16px;
+            margin-bottom: 22px;
+        }
+
+        .inside-header h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #ba4a00;
+        }
+
+        .mom-text {
+            font-size: 1.07rem;
+            line-height: 1.85;
+            color: #4a3525;
+            margin-bottom: 16px;
+        }
+
+        .mom-highlight {
+            background: #fef9e7;
+            border-left: 4px solid #f39c12;
+            padding: 15px 18px;
+            border-radius: 0 14px 14px 0;
+            font-weight: 600;
+            color: #9c640c;
+            margin-bottom: 16px;
+            line-height: 1.75;
+        }
+
+        .mom-sign {
+            text-align: right;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.1rem;
+            color: #ba4a00;
+            margin-top: 22px;
+        }
+
+        .petal {
+            position: fixed;
+            top: -10vh;
+            font-size: 1.3rem;
+            pointer-events: none;
+            z-index: 5;
+            animation: fall linear forwards;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    </style>
+
+    <script>
+        // KHO TÂM THƯ GỬI MẸ (Mỗi lần F5 tự động đổi 1 bức thư khác nhau)
+        const MOM_LETTERS = [
+            {
+                title: "Mẹ kính yêu của con,",
+                p1: "Nhân ngày Phụ nữ Việt Nam 20/10, con tự tay làm tấm thiệp nhỏ này để gửi đến Mẹ — người phụ nữ ấm áp, bao dung và kiên cường nhất trong cuộc đời của con.",
+                quote: "💛 Dù con có trưởng thành và đi xa đến đâu, thì nụ cười hiền hậu và sự quan tâm của Mẹ vẫn luôn là điểm tựa bình yên nhất để con trở về.",
+                p2: "Hằng ngày đôi khi con ít nói ra những lời ngọt ngào trực tiếp, nhưng trong lòng con lúc nào cũng tràn ngập sự biết ơn vì những tháng năm Mẹ đã tần tảo, lo lắng và dành trọn những điều tốt đẹp nhất cho gia đình mình.",
+                p3: "Ngày 20/10 năm nay, con chúc Mẹ luôn thật nhiều sức khỏe, tâm hồn lúc nào cũng thư thái, bớt đi những âu lo thường nhật và cả 365 ngày trong năm đều rạng rỡ niềm vui!",
+                sign: "Con thương Mẹ thật nhiều! ❤️🌷"
+            },
+            {
+                title: "Gửi Mẹ yêu quý của con,",
+                p1: "Chúc mừng Mẹ ngày Phụ nữ Việt Nam 20/10! Con gửi đến Mẹ ngàn lời chúc tốt đẹp nhất cùng lòng biết ơn sâu sắc vì tất cả những yêu thương Mẹ đã dành cho con suốt những năm tháng qua.",
+                quote: "🌺 Với thế giới, Mẹ có thể là một người bình thường, nhưng với con, Mẹ luôn là cả bầu trời ấm áp và dịu dàng nhất.",
+                p2: "Cảm ơn Mẹ vì đã luôn kiên nhẫn lắng nghe, động viên và dõi theo từng bước trưởng thành của con. Mỗi bữa cơm ngon, mỗi lời dặn dò của Mẹ đều là hành trang quý giá nhất mà con mang theo.",
+                p3: "Con cầu chúc Mẹ lúc nào cũng dồi dào sức khỏe, luôn trẻ trung, bình an và mỗi ngày trôi qua đều ngập tràn tiếng cười hạnh phúc bên gia đình mình!",
+                sign: "Con luôn tự hào vì được là con của Mẹ! 💛🌸"
+            },
+            {
+                title: "Mẹ thương yêu của con,",
+                p1: "Hôm nay là ngày 20/10 — ngày tôn vinh những người phụ nữ tuyệt vời, và người đầu tiên con nghĩ đến luôn là Mẹ.",
+                quote: "🌷 Cảm ơn Mẹ vì đã luôn là ngọn đèn ấm áp sưởi ấm ngôi nhà mình, là nơi con luôn tìm thấy sự bình yên sau mọi bộn bề cuộc sống.",
+                p2: "Con biết để con có được ngày hôm nay là biết bao vất vả, hy sinh thầm lặng của Mẹ. Con sẽ luôn cố gắng học tập và sống thật tốt để Mẹ luôn yên tâm và tự hào về con.",
+                p3: "Nhân ngày đặc biệt này, con chúc Mẹ thật nhiều sức khỏe, luôn giữ mãi nụ cười tươi tắn trên môi và tận hưởng thật nhiều niềm vui mỗi ngày!",
+                sign: "Yêu Mẹ của con nhất trên đời! ❤️🌺"
+            },
+            {
+                title: "Kính gửi Mẹ yêu của con,",
+                p1: "Nhân ngày 20/10, con xin gửi trọn vẹn tình yêu thương và sự kính trọng nhất đến Mẹ qua tấm thiệp nhỏ này.",
+                quote: "✨ Không có món quà nào sánh bằng tình thương của Mẹ, và niềm hạnh phúc lớn nhất của con là được thấy Mẹ luôn khỏe mạnh, vui cười mỗi ngày.",
+                p2: "Cảm ơn Mẹ vì đã luôn dịu dàng che chở, dạy cho con biết yêu thương và kiên trì trước mọi thử thách. Sự ấm áp của Mẹ chính là điều tuyệt vời nhất mà con có được trong cuộc đời.",
+                p3: "Chúc Mẹ yêu ngày 20/10 thật trọn vẹn, vạn sự bình an, sức khỏe dồi dào và lúc nào cũng tràn đầy niềm vui!",
+                sign: "Con yêu Mẹ rất nhiều! 🌷💛"
+            }
+        ];
+
+        function loadRandomMomLetter() {
+            let lastIdx = parseInt(sessionStorage.getItem('mom_last_wish') || '-1', 10);
+            let nextIdx;
+            do {
+                nextIdx = Math.floor(Math.random() * MOM_LETTERS.length);
+            } while (nextIdx === lastIdx && MOM_LETTERS.length > 1);
+            sessionStorage.setItem('mom_last_wish', nextIdx);
+
+            const item = MOM_LETTERS[nextIdx];
+            document.getElementById('m-title').innerText = item.title;
+            document.getElementById('m-p1').innerText = item.p1;
+            document.getElementById('m-quote').innerText = item.quote;
+            document.getElementById('m-p2').innerText = item.p2;
+            document.getElementById('m-p3').innerText = item.p3;
+            document.getElementById('m-sign').innerText = item.sign;
+        }
+
+        function openMomCard() {
+            const card = document.getElementById('mom-card');
+            card.classList.add('opened');
+            launchFireworkBurst();
+        }
+
+        // HỆ THỐNG PHÁO HOA MỖI 5 GIÂY
+        let fwCtx, fwCanvas, particles = [];
+        function initFireworks() {
+            fwCanvas = document.getElementById('fireworks-canvas');
+            fwCtx = fwCanvas.getContext('2d');
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            requestAnimationFrame(animateFireworks);
+            setInterval(launchFireworkBurst, 5000);
+        }
+
+        function resizeCanvas() {
+            if (!fwCanvas) return;
+            fwCanvas.width = window.innerWidth;
+            fwCanvas.height = window.innerHeight;
+        }
+
+        function launchFireworkBurst() {
+            const colors = ['#f39c12', '#e74c3c', '#f1c40f', '#ff758f', '#e67e22', '#ff9ebb'];
+            for (let b = 0; b < 2; b++) {
+                setTimeout(() => {
+                    const x = window.innerWidth * (0.2 + Math.random() * 0.6);
+                    const y = window.innerHeight * (0.15 + Math.random() * 0.45);
+                    for (let i = 0; i < 45; i++) {
+                        const angle = (Math.PI * 2 * i) / 45;
+                        const speed = 2 + Math.random() * 4.5;
+                        particles.push({
+                            x, y,
+                            vx: Math.cos(angle) * speed,
+                            vy: Math.sin(angle) * speed,
+                            alpha: 1,
+                            color: colors[Math.floor(Math.random() * colors.length)],
+                            size: 2.5 + Math.random() * 2.5
+                        });
+                    }
+                }, b * 350);
+            }
+        }
+
+        function animateFireworks() {
+            fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.06;
+                p.alpha -= 0.016;
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+                fwCtx.globalAlpha = p.alpha;
+                fwCtx.fillStyle = p.color;
+                fwCtx.beginPath();
+                fwCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                fwCtx.fill();
+            }
+            requestAnimationFrame(animateFireworks);
+        }
+
+        function startFallingPetals() {
+            const icons = ['🌸', '🌺', '✨', '💛', '🌷'];
+            setInterval(() => {
+                const el = document.createElement('div');
+                el.classList.add('petal');
+                el.innerText = icons[Math.floor(Math.random() * icons.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 3.5 + 4) + 's';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 7500);
+            }, 450);
+        }
+
+        window.addEventListener("DOMContentLoaded", function () {
+            loadRandomMomLetter();
+            initFireworks();
+            startFallingPetals();
+        });
+    </script>
+</head>
+<body>
+
+    <canvas id="fireworks-canvas"></canvas>
+
+    <div class="page-title">
+        <span>🌺 Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 🌺</span>
+        <h1>Món Quà Tinh Thần Gửi Mẹ Yêu</h1>
+    </div>
+
+    <div class="card-scene">
+        <div class="greeting-card" id="mom-card">
+            
+            <!-- BÌA THIỆP (Bấm vào để mở cánh thiệp 3D) -->
+            <div class="card-front" onclick="openMomCard()">
+                <div class="cover-icon-circle">👩‍👦💐</div>
+                <h2>Kính Tặng Mẹ Của Con</h2>
+                <p>Con có đôi lời yêu thương gửi đến Mẹ nhân ngày 20/10. Mẹ hãy chạm nhẹ vào tấm thiệp này để mở ra nhé!</p>
+                <div class="open-card-btn">💌 Chạm Để Mở Thiệp 💌</div>
+            </div>
+
+            <!-- RUỘT THIỆP BÊN TRONG -->
+            <div class="card-inside">
+                <div class="inside-illustration">
+                    <div class="family-badge">👩‍👦</div>
+                    <div class="family-badge" style="width: 75px; height: 75px; font-size: 2.3rem;">🪷</div>
+                    <div class="family-badge">❤️</div>
+                </div>
+
+                <div class="inside-header">
+                    <h2 id="m-title">Mẹ kính yêu của con,</h2>
+                </div>
+
+                <p class="mom-text" id="m-p1"></p>
+                <div class="mom-highlight" id="m-quote"></div>
+                <p class="mom-text" id="m-p2"></p>
+                <p class="mom-text" id="m-p3"></p>
+
+                <div class="mom-sign" id="m-sign">Con thương Mẹ thật nhiều! ❤️🌷</div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
